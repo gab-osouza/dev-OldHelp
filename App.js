@@ -10,26 +10,29 @@ export default function App() {
     'PlusJakartaSans': require('./assets/fonts/PlusJakartaSans-VariableFont_wght.ttf'),
   });
 
-  const [validation, setValidation] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isEmptyEmail, setIsEmptyEmail] = useState(false);
+  const [isEmptyPassword, setIsEmptyPassword] = useState(false);
 
-  function val() {
-    let campo1;
-    let campo2;
-    let validacao;
 
-    campo1 = { setEmail };
-    campo2 = { setPassword };
+  function fnValidar() {
+    let sEmail;
+    let sPassword;
+    sEmail = email;
+    sPassword = password;
 
-    validacao = campo1, campo2;
-
-    setValidation(validacao);
-
-    if (email == "" || password == "") {
-      setValidation('Campo vazio')
+    if (sEmail == '') {
+      setIsEmptyEmail(true);
+    } else {
+      setIsEmptyEmail(false);
     }
 
+    if (sPassword == '') {
+      setIsEmptyPassword(true);
+    } else {
+      setIsEmptyPassword(false);
+    }
   }
 
   return (
@@ -55,7 +58,7 @@ export default function App() {
       />
 
       <Text>
-        {validation}
+        {isEmptyEmail == true ? "Campo vazio!" : ""}
       </Text>
 
       <TextInput
@@ -67,11 +70,11 @@ export default function App() {
         placeholderTextColor='#581183'
       />
       <Text>
-        {validation}
+        {isEmptyPassword == true ? "Campo vazio!" : ""}
       </Text>
 
       <TouchableOpacity
-        onPress={val}
+        onPress={fnValidar}
         style={styles.button}>
         <Text style={[styles.text, styles.textWhite]}>
           Entrar
