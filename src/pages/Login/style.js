@@ -5,7 +5,7 @@ export default StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 20,
+        gap: 20
     },
 
     text: {
@@ -14,14 +14,11 @@ export default StyleSheet.create({
     },
 
     input: {
-        selectionColor:'#581183',
         paddingHorizontal: 16,
         paddingVertical: 8,
-        fontWeight: '600',
         borderWidth: 2,
         borderColor: '#581183',
         borderRadius: 15,
-        width: "80%",
     },
 
     button: {
@@ -29,7 +26,7 @@ export default StyleSheet.create({
         backgroundColor: '#581183',
         borderRadius: 20,
         width: "70%",
-        paddingVertical: 4,
+        paddingVertical: 8,
         alignItems: 'center',
     },
 
@@ -46,7 +43,7 @@ export default StyleSheet.create({
     },
 
     boldText: {
-        fontWeight: '1000',
+        fontWeight: 'bold',
     },
 
     centerText: {
@@ -61,7 +58,7 @@ export default StyleSheet.create({
     // color area
     whiteText: {
         color: '#fff',
-        fontWeight: '600',
+        fontWeight: 'bold',
         fontSize: 24
     },
 
@@ -69,11 +66,19 @@ export default StyleSheet.create({
         color: '#581183',
     },
 
-    greyText:{
+    greyText: {
         color: '#8C8C8C',
-        marginHorizontal: 5
-    }
-});
+    },
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+        marginLeft: 5
+    },
+    marginH: {
+        marginHorizontal: 50
+    }, 
+
+}); 
 
 
 

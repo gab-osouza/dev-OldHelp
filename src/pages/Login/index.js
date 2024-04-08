@@ -43,17 +43,28 @@ export default function Login({ navigation }) {
 
     <View style={styles.container}>
 
-      <Logo style={{ width: 220, height: 150 }} />
-      <TextInput
-        style={[styles.input, styles.text]}
-        placeholder='Email'
-        placeholderTextColor='#581183'
-        keyboardType='email-address'
-        value={email}
-        onChangeText={text => setEmail(text)}
-      />
+      <Logo />
 
 
+      <View style={{width:'80%',}}>
+      <Text style={[styles.text, styles.purpleText, styles.boldText,styles.label]}>
+          Email
+        </Text>
+        <TextInput
+          style={[styles.input, styles.text,]}
+          placeholder='Email'
+          placeholderTextColor='#581183'
+          keyboardType='email-address'
+          value={email}
+          onChangeText={text => setEmail(text)}
+        />
+      </View>
+
+
+      <View style={{width:'80%',}}>
+      <Text style={[styles.text, styles.purpleText, styles.boldText,styles.label]}>
+          Senha
+        </Text>
       <TextInput
         value={password}
         onChangeText={text => setPassword(text)}
@@ -62,6 +73,7 @@ export default function Login({ navigation }) {
         placeholder='Senha'
         placeholderTextColor='#581183'
       />
+      </View>
 
       <TouchableOpacity
         onPress={fnValidar}
@@ -82,7 +94,7 @@ export default function Login({ navigation }) {
 
       </View>
 
-      <Text style={[styles.text, styles.centerText, styles.greyText]}>Ao continuar, você concorda com os Termos de Serviço e a Política de Privacidade.</Text>
+      <Text style={[styles.text, styles.centerText, styles.greyText, styles.marginH]}>Ao continuar, você concorda com os Termos de Serviço e a Política de Privacidade.</Text>
       <Text style={[styles.text, styles.centerText, styles.greyText]}>Ainda não esta no OldHelp?{'\n'}
         <TouchableOpacity
           onPress={accessRegister}>

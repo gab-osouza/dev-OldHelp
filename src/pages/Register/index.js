@@ -1,7 +1,9 @@
 import { View, Text, TextInput, TouchableOpacity, Alert, } from 'react-native';
 import { useState } from 'react';
-import styles from './style';
+import styles from './../Login/style';
 import Logo from './../../components/logo/index.js';
+import MaskInput, { Masks } from 'react-native-mask-input';
+
 
 export default function Register({ navigation }) {
 
@@ -11,21 +13,21 @@ export default function Register({ navigation }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [birthdate, setBirthdate] = useState('');
 
   function fnValidar() {
     const emailAddress = email;
     const userPassword = password;
+    const userBirthdate = birthdate;
 
     const isEmptyEmail = emailAddress === '';
     const isEmptyPassword = userPassword === '';
+    const isEmptyBirthdate = userBirthdate === '';
 
-    if (isEmptyEmail || isEmptyPassword) {
+    if (isEmptyEmail || isEmptyPassword || isEmptyBirthdate) {
       const errorMessage = isEmptyEmail && isEmptyPassword
-        ? 'Insira seu email e senha para Entrar.'
-        : isEmptyEmail
-          ? 'Insira seu email para Entrar.'
-          : 'Insira sua senha para entrar.';
-
+        ? 'Preencha todos os campos.'
+        : ''
       Alert.alert(errorMessage, '', [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
       ], { cancelable: true });
@@ -38,25 +40,55 @@ export default function Register({ navigation }) {
 
     <View style={styles.container}>
 
-      <Logo style={{ width: 220, height: 150 }} />
-      <TextInput
-        style={[styles.input, styles.text]}
-        placeholder='Email'
-        placeholderTextColor='#581183'
-        keyboardType='email-address'
-        value={email}
-        onChangeText={text => setEmail(text)}
-      />
+      <Logo />
+      <View style={{ width: '80%', }}>
+
+        <Text style={[styles.text, styles.purpleText, styles.boldText]}>
+          Email
+        </Text>
+        <TextInput
+          style={[styles.input, styles.text]}
+          placeholder='Email'
+          placeholderTextColor='#581183'
+          keyboardType='email-address'
+          value={email}
+          onChangeText={text => setEmail(text)}
+        />
+
+      </View>
+      <View style={{ width: '80%', }}>
+
+        <Text style={[styles.text, styles.purpleText, styles.boldText, styles.label]}>
+          Senha
+        </Text>
+        <TextInput
+          value={password}
+          onChangeText={text => setPassword(text)}
+          style={[styles.input, styles.text]}
+          secureTextEntry={true}
+          placeholder='Senha'
+          placeholderTextColor='#581183'
+        />
 
 
-      <TextInput
-        value={password}
-        onChangeText={text => setPassword(text)}
-        style={[styles.input, styles.text]}
-        secureTextEntry={true}
-        placeholder='Senha'
-        placeholderTextColor='#581183'
-      />
+      </View>
+      <View style={{ width: '80%', }}>
+
+        <Text style={[styles.text, styles.purpleText, styles.boldText, styles.label]}>
+          Data de nascimento
+        </Text>
+
+        <MaskInput
+          value={birthdate}
+          onChangeText={setBirthdate}
+          mask={Masks.DATE_DDMMYYYY}
+          style={[styles.input, styles.text]}
+          keyboardType='numeric'
+          placeholder='__/__/____'
+          placeholderTextColor='#581183'
+        />
+
+      </View>
 
       <TouchableOpacity
         onPress={fnValidar}
@@ -66,7 +98,7 @@ export default function Register({ navigation }) {
         </Text>
       </TouchableOpacity>
 
- 
+
 
       {/*--- ou ---*/}
 
@@ -78,16 +110,16 @@ export default function Register({ navigation }) {
         <View style={styles.line} />
 
       </View>
+      <Text style={[styles.text, styles.centerText, styles.greyText, styles.marginH]}>Ao continuar, você concorda com os Termos de Serviço e a Política de Privacidade.</Text>
 
-      <Text style={[styles.text, styles.centerText, styles.greyText]}>Ao continuar, você concorda com os Termos de Serviço e a Política de Privacidade.</Text>
-      <Text style={[styles.text, styles.centerText, styles.greyText]}>Ainda não esta no OldHelp?{'\n'}
-        <TouchableOpacity
-          onPress={accessLogin}>
-          <Text style={[styles.text, styles.purpleText, styles.boldText]}>
-            Crie sua conta.
-          </Text>
-        </TouchableOpacity>
-      </Text>
+
+      <TouchableOpacity
+        onPress={accessLogin}
+        style={{ flexDirection: 'row', }}>
+
+        <Text style={[styles.text, styles.centerText, styles.greyText]}>Já tem uma conta?</Text>
+        <Text style={[styles.text, styles.purpleText, styles.boldText,]}>Entrar.</Text>
+      </TouchableOpacity>
 
 
 
