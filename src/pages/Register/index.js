@@ -11,6 +11,12 @@ export default function Register({ navigation }) {
     navigation.navigate('Login')
   }
 
+  function accessName() {
+    navigation.navigate('Name',
+    {email: email, password: password})
+
+  }
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [birthdate, setBirthdate] = useState('');
@@ -31,7 +37,10 @@ export default function Register({ navigation }) {
       Alert.alert(errorMessage, '', [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
       ], { cancelable: true });
+    }else{
+      accessName();
     }
+    
   }
 
 

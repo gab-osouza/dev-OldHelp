@@ -14,6 +14,13 @@ export default function Login({ navigation }) {
     navigation.navigate('Register')
   }
 
+  
+  function accessName() {
+    navigation.navigate('Name',
+    {email: email, password: password})
+
+  }
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -35,6 +42,8 @@ export default function Login({ navigation }) {
       Alert.alert(errorMessage, '', [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
       ], { cancelable: true });
+    }else{
+    accessName();
     }
   }
 
