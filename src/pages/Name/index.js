@@ -3,22 +3,28 @@ import { View, Text, TextInput, TouchableOpacity, } from 'react-native';
 import { useState } from 'react';
 import styles from './style';
 import Logo from './../../components/logo/index.js';
+import CamIcon from '../../components/camIcon/index.js';
 
-export default function Name({ navigation }) {
+export default function Name({ navigation, route }) {
   const [name, setName] = useState('');
+  const {email,password, birthdate} = route.params;
 
   function accessHome() {
-    navigation.navigate('Home')
+    navigation.navigate('Home',{name:name, email:email , password: password, birthdate:birthdate})
   }
 
 
   return (
     <View style={styles.container}>
       <Logo />
-      <Text style={[styles.text, styles.purpleText]}>
+      <Text style={[styles.text, styles.purpleText, styles.boldText, styles]}>
         Adicionando novo perfil
       </Text>
+<TouchableOpacity>
+  <CamIcon/>
+</TouchableOpacity>
       <View style={{ width: '80%', }}>
+        
 
         <Text style={[styles.text, styles.purpleText, styles.boldText]}>
           Nome
@@ -40,7 +46,6 @@ export default function Name({ navigation }) {
           Adicionar perfil
         </Text>
       </TouchableOpacity>
-
     </View>
   );
 }

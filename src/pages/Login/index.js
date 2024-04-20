@@ -14,16 +14,17 @@ export default function Login({ navigation }) {
     navigation.navigate('Register')
   }
 
-  
-  function accessName() {
-    navigation.navigate('Name',
-    {email: email, password: password})
 
+  function accessName() {
+    navigation.navigate('Name', {
+      email: email,
+      password: password
+    })
   }
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [isEmpty, setIsEmpty] = useState(false);
 
   function fnValidar() {
     const emailAddress = email;
@@ -39,11 +40,13 @@ export default function Login({ navigation }) {
           ? 'Insira seu email para Entrar.'
           : 'Insira sua senha para entrar.';
 
+      setIsEmpty(true)
+
       Alert.alert(errorMessage, '', [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
       ], { cancelable: true });
-    }else{
-    accessName();
+    } else {
+      accessName();
     }
   }
 
@@ -55,8 +58,8 @@ export default function Login({ navigation }) {
       <Logo />
 
 
-      <View style={{width:'80%',}}>
-      <Text style={[styles.text, styles.purpleText, styles.boldText,styles.label]}>
+      <View style={{ width: '80%', }}>
+        <Text style={[styles.text, styles.purpleText, styles.boldText, styles.label]}>
           Email
         </Text>
         <TextInput
@@ -70,19 +73,21 @@ export default function Login({ navigation }) {
       </View>
 
 
-      <View style={{width:'80%',}}>
-      <Text style={[styles.text, styles.purpleText, styles.boldText,styles.label]}>
+      <View style={{ width: '80%', }}>
+        <Text style={[styles.text, styles.purpleText, styles.boldText, styles.label]}>
           Senha
         </Text>
-      <TextInput
-        value={password}
-        onChangeText={text => setPassword(text)}
-        style={[styles.input, styles.text]}
-        secureTextEntry={true}
-        placeholder='Senha'
-        placeholderTextColor='#581183'
-      />
+        <TextInput
+          value={password}
+          onChangeText={text => setPassword(text)}
+          style={[styles.input, styles.text]}
+          secureTextEntry={true}
+          placeholder='Senha'
+          placeholderTextColor='#581183'
+        />
       </View>
+
+      <Text>{isEmpty == true ? 'Prencha todos os campos' : ''}</Text>
 
       <TouchableOpacity
         onPress={fnValidar}
@@ -112,7 +117,6 @@ export default function Login({ navigation }) {
           </Text>
         </TouchableOpacity>
       </Text>
-
 
 
 

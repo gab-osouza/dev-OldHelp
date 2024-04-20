@@ -13,7 +13,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home'>
+      <Stack.Navigator initialRouteName='Login'>
         <Stack.Group // tira a barra de cima e faz um grupo
           screenOptions={{ headerShown: false }}>
           <Stack.Screen name='Login' component={Login}/>

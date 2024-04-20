@@ -30,29 +30,13 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
 
-    lineRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: "70%"
-    },
-
-    line: {
-        flex: 1,
-        height: 2,
-        backgroundColor: '#581183',
-    },
-
     boldText: {
+        fontSize: 16,
         fontWeight: 'bold',
     },
 
     centerText: {
         textAlign: 'center',
-    },
-
-    lineText: {
-        width: 70,
-        textAlign: 'center'
     },
 
     // color area
@@ -66,9 +50,6 @@ export default StyleSheet.create({
         color: '#581183',
     },
 
-    greyText: {
-        color: '#8C8C8C',
-    },
     label: {
         fontSize: 16,
         marginBottom: 5,
@@ -76,9 +57,9 @@ export default StyleSheet.create({
     },
     marginH: {
         marginHorizontal: 50
-    }, 
+    },
 
-}); 
+});
 
 
 

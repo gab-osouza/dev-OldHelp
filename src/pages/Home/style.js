@@ -10,53 +10,18 @@ export default StyleSheet.create({
         fontFamily: 'PlusJakartaSans',
     },
 
-    input: {
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderWidth: 2,
-        borderColor: '#581183',
-        borderRadius: 15,
-    },
-
-    button: {
-        color: '#581183',
-        backgroundColor: '#581183',
-        borderRadius: 20,
-        width: "70%",
-        paddingVertical: 8,
-        alignItems: 'center',
-    },
-
-    lineRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: "70%"
-    },
-
-    line: {
-        flex: 1,
-        height: 2,
-        backgroundColor: '#581183',
-    },
-
     boldText: {
         fontWeight: 'bold',
     },
 
     centerText: {
+        marginTop: "45%",
         textAlign: 'center',
-    },
-
-    lineText: {
-        width: 70,
-        textAlign: 'center'
     },
 
     // color area
     whiteText: {
         color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 24
     },
 
     purpleText: {
@@ -78,8 +43,18 @@ export default StyleSheet.create({
     header:{
         backgroundColor: '#581183',
         height: 90,
-        padding: 5
+        gap: 5,
+        paddingTop: 20,
+        paddingLeft: 20
     },
+    border:{
+        borderWidth: 1,
+        borderColor: '#fff',
+        padding: 5,
+        paddingLeft: 10,
+        borderRadius: 20,
+        width: "50%"
+    }
 }); 
 
 

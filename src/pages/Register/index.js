@@ -7,19 +7,21 @@ import MaskInput, { Masks } from 'react-native-mask-input';
 
 export default function Register({ navigation }) {
 
-  function accessLogin() {
-    navigation.navigate('Login')
-  }
 
   function accessName() {
-    navigation.navigate('Name',
-    {email: email, password: password})
-
+    navigation.navigate('Name', {
+      email: email,
+      password: password,
+      birthdate: birthdate
+    }
+    )
   }
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [birthdate, setBirthdate] = useState('');
+
+  const [isEmpty, setIsEmpty] = useState(false);
 
   function fnValidar() {
     const emailAddress = email;
@@ -31,16 +33,17 @@ export default function Register({ navigation }) {
     const isEmptyBirthdate = userBirthdate === '';
 
     if (isEmptyEmail || isEmptyPassword || isEmptyBirthdate) {
-      const errorMessage = isEmptyEmail && isEmptyPassword
-        ? 'Preencha todos os campos.'
-        : ''
+      const errorMessage = 'Preencha todos os campos.';
+
+      setIsEmpty(true)
+
       Alert.alert(errorMessage, '', [
         { text: 'OK', onPress: () => console.log('OK Pressed') },
       ], { cancelable: true });
-    }else{
+    } else {
       accessName();
     }
-    
+
   }
 
 
@@ -99,6 +102,9 @@ export default function Register({ navigation }) {
 
       </View>
 
+
+      <Text>{isEmpty == true ? 'Prencha todos os campos' : ''}</Text>
+
       <TouchableOpacity
         onPress={fnValidar}
         style={styles.button}>
@@ -123,7 +129,7 @@ export default function Register({ navigation }) {
 
 
       <TouchableOpacity
-        onPress={accessLogin}
+        onPress={() => navigation.goBack()}
         style={{ flexDirection: 'row', }}>
 
         <Text style={[styles.text, styles.centerText, styles.greyText]}>Já tem uma conta?</Text>
