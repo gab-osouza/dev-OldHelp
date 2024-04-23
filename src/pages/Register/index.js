@@ -4,8 +4,7 @@ import { View, Text, TextInput, Pressable, } from 'react-native';
 import { useState } from 'react';
 import styles from './style';
 import Logo from './../../components/logo/';
-import OpenEye from './../../components/eye/open';
-import CloseEye from './../../components/eye/close';
+import Eye from './../../components/eye';
 
 
 export default function Register({ navigation }) {
@@ -116,12 +115,7 @@ export default function Register({ navigation }) {
             secureTextEntry={secure}
             onBlur={() => blurEmptyField('passwordInput')}
           />
-          <View style={styles.alignsEye}>
-            <Pressable onPress={fnEye}>
-              <OpenEye style={eyeClick ? styles.displayNone : styles.displayFlex} />
-              <CloseEye style={eyeClick ? styles.displayFlex : styles.displayNone} />
-            </Pressable>
-          </View>
+          <Eye onClick={fnEye}/>
         </View>
         <Text style={textPasswordEmpty}>Este campo é obrigatório</Text>
       </View>
