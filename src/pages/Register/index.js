@@ -1,89 +1,131 @@
-import { View, Text, TextInput, TouchableOpacity, Alert, } from 'react-native';
-import { useState } from 'react';
-import styles from './../Login/style';
-import Logo from './../../components/logo/index.js';
+
 import MaskInput, { Masks } from 'react-native-mask-input';
+import { View, Text, TextInput, Pressable, } from 'react-native';
+import { useState } from 'react';
+import styles from './style';
+import Logo from './../../components/logo/';
+import OpenEye from './../../components/eye/open';
+import CloseEye from './../../components/eye/close';
 
 
 export default function Register({ navigation }) {
-
+  
+  function fnEye() {
+    if (eyeClick === true) {
+      setEyeClick(false);
+      setSecure(false);
+    } else {
+      setEyeClick(true);
+      setSecure(true);
+    }
+  }
 
   function accessName() {
     navigation.navigate('Name', {
       email: email,
-      password: password,
-      birthdate: birthdate
-    }
-    )
+      password: password
+    })
   }
+  
+  const [textEmailEmpty, setTextEmail] = useState(styles.displayNone);
+  const [textPasswordEmpty, setTextPassword] = useState(styles.displayNone);
+  const [textBirthdateEmpty, setTextBirthdate] = useState(styles.displayNone);
+  //eye style
+  const [secure, setSecure] = useState(true);
+  const [eyeClick, setEyeClick] = useState(true);
 
+  const [styleEmail, setStyleEmail] = useState(styles.input);
+  const [stylePassword, setStylePassword] = useState(styles.input);
+  const [styleBirthdate, setStyleBirthdate] = useState(styles.input);
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [birthdate, setBirthdate] = useState('');
+  
+  const blurEmptyField = (id) => {
+    if (id === 'passwordInput'){
+      if (password === '') {
+        setStylePassword(styles.redInput);
+        setTextPassword(styles.redText);
+      }
+    }
+    if (id === 'emailInput'){
+      if (email === '') {
+        setStyleEmail(styles.redInput);
+        setTextEmail(styles.redText);
+      }
+    }
+    if (id === 'birthdateInput'){
+      if (email === '') {
+        setStyleBirthdate(styles.redInput);
+        setTextBirthdate(styles.redText);
+      }
+    }
+  };
 
-  const [isEmpty, setIsEmpty] = useState(false);
+  const changeTextPassword = (text) => {
+    setPassword(text);
+    setStylePassword(styles.input);
+    setTextPassword(styles.displayNone);
+  };
+
+  const changeTextEmail = (text) => {
+    setEmail(text);
+    setStyleEmail(styles.input);
+    setTextEmail(styles.displayNone);
+  };
+
+  const changeTextBirthdate = (text) => {
+    setBirthdate(text);
+    setStyleBirthdate(styles.input);
+    setTextBirthdate(styles.displayNone);
+  };
 
   function fnValidar() {
-    const emailAddress = email;
-    const userPassword = password;
-    const userBirthdate = birthdate;
-
-    const isEmptyEmail = emailAddress === '';
-    const isEmptyPassword = userPassword === '';
-    const isEmptyBirthdate = userBirthdate === '';
-
-    if (isEmptyEmail || isEmptyPassword || isEmptyBirthdate) {
-      const errorMessage = 'Preencha todos os campos.';
-
-      setIsEmpty(true)
-
-      Alert.alert(errorMessage, '', [
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ], { cancelable: true });
-    } else {
-      accessName();
-    }
-
-  }
-
+    accessName();
+  };
 
   return (
-
-
     <View style={styles.container}>
-
       <Logo />
       <View style={{ width: '80%', }}>
-
-        <Text style={[styles.text, styles.purpleText, styles.boldText]}>
+        <Text style={[styles.text, styles.purpleText, styles.boldText, styles.label]}>
           Email
         </Text>
         <TextInput
-          style={[styles.input, styles.text]}
-          placeholder='Email'
-          placeholderTextColor='#581183'
           keyboardType='email-address'
+          style={styleEmail}
           value={email}
-          onChangeText={text => setEmail(text)}
+          onChangeText={changeTextEmail}
+          onBlur={() => blurEmptyField('emailInput')}
         />
-
+        <Text style={textEmailEmpty}>Este campo é obrigatório</Text>
       </View>
-      <View style={{ width: '80%', }}>
 
+
+      <View style={{ width: '80%', }}>
         <Text style={[styles.text, styles.purpleText, styles.boldText, styles.label]}>
           Senha
         </Text>
-        <TextInput
-          value={password}
-          onChangeText={text => setPassword(text)}
-          style={[styles.input, styles.text]}
-          secureTextEntry={true}
-          placeholder='Senha'
-          placeholderTextColor='#581183'
-        />
+        <View style={{ justifyContent: 'center' }}>
 
-
+          <TextInput
+            style={stylePassword}
+            value={password}
+            onChangeText={changeTextPassword}
+            secureTextEntry={secure}
+            onBlur={() => blurEmptyField('passwordInput')}
+          />
+          <View style={styles.alignsEye}>
+            <Pressable onPress={fnEye}>
+              <OpenEye style={eyeClick ? styles.displayNone : styles.displayFlex} />
+              <CloseEye style={eyeClick ? styles.displayFlex : styles.displayNone} />
+            </Pressable>
+          </View>
+        </View>
+        <Text style={textPasswordEmpty}>Este campo é obrigatório</Text>
       </View>
+
       <View style={{ width: '80%', }}>
 
         <Text style={[styles.text, styles.purpleText, styles.boldText, styles.label]}>
@@ -92,28 +134,24 @@ export default function Register({ navigation }) {
 
         <MaskInput
           value={birthdate}
-          onChangeText={setBirthdate}
+          onChangeText={changeTextBirthdate}
+          onBlur={() => blurEmptyField('birthdateInput')}
           mask={Masks.DATE_DDMMYYYY}
-          style={[styles.input, styles.text]}
+          style={styleBirthdate}
           keyboardType='numeric'
           placeholder='__/__/____'
           placeholderTextColor='#581183'
         />
+      <Text style={textBirthdateEmpty}>Este campo é obrigatório</Text>
 
       </View>
-
-
-      <Text>{isEmpty == true ? 'Prencha todos os campos' : ''}</Text>
-
-      <TouchableOpacity
+      <Pressable
         onPress={fnValidar}
         style={styles.button}>
         <Text style={[styles.text, styles.whiteText]}>
           Cadastre-se
         </Text>
-      </TouchableOpacity>
-
-
+      </Pressable>
 
       {/*--- ou ---*/}
 
@@ -125,20 +163,16 @@ export default function Register({ navigation }) {
         <View style={styles.line} />
 
       </View>
+
       <Text style={[styles.text, styles.centerText, styles.greyText, styles.marginH]}>Ao continuar, você concorda com os Termos de Serviço e a Política de Privacidade.</Text>
+      <View style={{justifyContent: 'center',flexDirection: 'row'}}>
+      <Text style={[styles.text, styles.centerText, styles.greyText]}>Já tem uma conta? </Text>
+        <Pressable
+          onPress={() => navigation.goBack()}>
 
-
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={{ flexDirection: 'row', }}>
-
-        <Text style={[styles.text, styles.centerText, styles.greyText]}>Já tem uma conta?</Text>
-        <Text style={[styles.text, styles.purpleText, styles.boldText,]}>Entrar.</Text>
-      </TouchableOpacity>
-
-
-
-
+          <Text style={[styles.text, styles.purpleText, styles.boldText,]}>Entrar.</Text>
+        </Pressable>
+            </View>
 
     </View>
   );

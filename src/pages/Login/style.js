@@ -14,6 +14,8 @@ export default StyleSheet.create({
     },
 
     input: {
+        fontSize: 14,
+        fontFamily: 'PlusJakartaSans',
         paddingHorizontal: 16,
         paddingVertical: 8,
         borderWidth: 2,
@@ -21,6 +23,17 @@ export default StyleSheet.create({
         borderRadius: 15,
     },
 
+    redInput: {
+        fontSize: 14,
+        fontFamily: 'PlusJakartaSans',
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderWidth: 2,
+        borderColor: '#E23624',
+        borderRadius: 15,
+    },
+
+    
     button: {
         color: '#581183',
         backgroundColor: '#581183',
@@ -29,27 +42,27 @@ export default StyleSheet.create({
         paddingVertical: 8,
         alignItems: 'center',
     },
-
+    
     lineRow: {
         flexDirection: 'row',
         alignItems: 'center',
         width: "70%"
     },
-
+    
     line: {
         flex: 1,
         height: 2,
         backgroundColor: '#581183',
     },
-
+    
     boldText: {
         fontWeight: 'bold',
     },
-
+    
     centerText: {
         textAlign: 'center',
     },
-
+    
     lineText: {
         width: 70,
         textAlign: 'center'
@@ -61,6 +74,13 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 24
     },
+    
+    redText:{
+        color: '#E23624',
+        display: 'flex',
+        marginTop: 5
+
+    },  
 
     purpleText: {
         color: '#581183',
@@ -77,6 +97,24 @@ export default StyleSheet.create({
     marginH: {
         marginHorizontal: 50
     }, 
+
+    displayNone:{
+        display: 'none'
+    },
+    
+    displayFlex:{
+        display: 'Flex'
+    },
+    alignsEye:{
+        position:'absolute',
+        height: 30, 
+        width: 30,
+        alignItems:'center', 
+        justifyContent: 'center',
+        left: "88%",
+
+
+    }
 
 }); 
 

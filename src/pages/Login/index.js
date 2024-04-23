@@ -1,19 +1,28 @@
-import { useFonts } from 'expo-font';
-
-import { View, Text, TextInput, TouchableOpacity, Alert, } from 'react-native';
+import { View, Text, TextInput, Pressable, } from 'react-native';
 import { useState } from 'react';
 import styles from './style';
-import Logo from './../../components/logo/index.js';
+import Logo from './../../components/logo/';
+import OpenEye from './../../components/eye/open';
+import CloseEye from './../../components/eye/close';
+import { StatusBar } from 'react-native';
+
 
 export default function Login({ navigation }) {
-  const [fontsLoaded] = useFonts({
-    'PlusJakartaSans': require('./../../fonts/PlusJakartaSans-VariableFont_wght.ttf'),
-  });
+
 
   function accessRegister() {
     navigation.navigate('Register')
   }
 
+  function fnEye() {
+    if (eyeClick === true) {
+      setEyeClick(false);
+      setSecure(false);
+    } else {
+      setEyeClick(true);
+      setSecure(true);
+    }
+  }
 
   function accessName() {
     navigation.navigate('Name', {
@@ -22,33 +31,48 @@ export default function Login({ navigation }) {
     })
   }
 
+  const [textEmailEmpty, setTextEmail] = useState(styles.displayNone);
+  const [textPasswordEmpty, setTextPassword] = useState(styles.displayNone);
+  //eye style
+  const [secure, setSecure] = useState(true);
+  const [eyeClick, setEyeClick] = useState(true);
+
+  const [styleEmail, setStyleEmail] = useState(styles.input);
+  const [stylePassword, setStylePassword] = useState(styles.input);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isEmpty, setIsEmpty] = useState(false);
+
+  function blurEmptyField(id){
+    if (id === 'passwordInput'){
+      if (password === '') {
+        setStylePassword(styles.redInput);
+        setTextPassword(styles.redText);
+      }
+    }
+    if (id === 'emailInput'){
+      if (email === '') {
+        setStyleEmail(styles.redInput);
+        setTextEmail(styles.redText);
+      }
+    }
+  };
+
+  const changeTextPassword = (text) => {
+    setPassword(text);
+    setStylePassword(styles.input);
+    setTextPassword(styles.displayNone);
+  };
+
+  const changeTextEmail = (text) => {
+    setEmail(text);
+    setStyleEmail(styles.input);
+    setTextEmail(styles.displayNone);
+  };
 
   function fnValidar() {
-    const emailAddress = email;
-    const userPassword = password;
-
-    const isEmptyEmail = emailAddress === '';
-    const isEmptyPassword = userPassword === '';
-
-    if (isEmptyEmail || isEmptyPassword) {
-      const errorMessage = isEmptyEmail && isEmptyPassword
-        ? 'Insira seu email e senha para Entrar.'
-        : isEmptyEmail
-          ? 'Insira seu email para Entrar.'
-          : 'Insira sua senha para entrar.';
-
-      setIsEmpty(true)
-
-      Alert.alert(errorMessage, '', [
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ], { cancelable: true });
-    } else {
-      accessName();
-    }
-  }
+    accessName();
+  };
 
   return (
 
@@ -63,13 +87,13 @@ export default function Login({ navigation }) {
           Email
         </Text>
         <TextInput
-          style={[styles.input, styles.text,]}
-          placeholder='Email'
-          placeholderTextColor='#581183'
           keyboardType='email-address'
+          style={styleEmail}
           value={email}
-          onChangeText={text => setEmail(text)}
+          onChangeText={changeTextEmail}
+          onBlur={() => blurEmptyField('emailInput')}
         />
+        <Text style={textEmailEmpty}>Este campo é obrigatório</Text>
       </View>
 
 
@@ -77,25 +101,33 @@ export default function Login({ navigation }) {
         <Text style={[styles.text, styles.purpleText, styles.boldText, styles.label]}>
           Senha
         </Text>
-        <TextInput
-          value={password}
-          onChangeText={text => setPassword(text)}
-          style={[styles.input, styles.text]}
-          secureTextEntry={true}
-          placeholder='Senha'
-          placeholderTextColor='#581183'
-        />
+        <View style={{ justifyContent: 'center' }}>
+
+          <TextInput
+            style={stylePassword}
+            value={password}
+            onChangeText={changeTextPassword}
+            secureTextEntry={secure}
+            onBlur={() => blurEmptyField('passwordInput')}
+          />
+          <View style={styles.alignsEye}>
+            <Pressable onPress={fnEye}>
+              <OpenEye style={eyeClick ? styles.displayNone : styles.displayFlex} />
+              <CloseEye style={eyeClick ? styles.displayFlex : styles.displayNone} />
+            </Pressable>
+          </View>
+        </View>
+        <Text style={textPasswordEmpty}>Este campo é obrigatório</Text>
       </View>
 
-      <Text>{isEmpty == true ? 'Prencha todos os campos' : ''}</Text>
 
-      <TouchableOpacity
+      <Pressable
         onPress={fnValidar}
         style={styles.button}>
         <Text style={[styles.text, styles.whiteText]}>
           Entrar
         </Text>
-      </TouchableOpacity>
+      </Pressable>
 
       {/*--- ou ---*/}
 
@@ -110,16 +142,13 @@ export default function Login({ navigation }) {
 
       <Text style={[styles.text, styles.centerText, styles.greyText, styles.marginH]}>Ao continuar, você concorda com os Termos de Serviço e a Política de Privacidade.</Text>
       <Text style={[styles.text, styles.centerText, styles.greyText]}>Ainda não esta no OldHelp?{'\n'}
-        <TouchableOpacity
+        <Pressable
           onPress={accessRegister}>
           <Text style={[styles.text, styles.purpleText, styles.boldText]}>
             Crie sua conta.
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </Text>
-
-
-
 
     </View>
   );
