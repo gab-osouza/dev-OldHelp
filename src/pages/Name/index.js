@@ -1,5 +1,5 @@
 
-import { View, Text, TextInput, TouchableOpacity, } from 'react-native';
+import { View, Text, TextInput, Pressable, } from 'react-native';
 import { useState } from 'react';
 import styles from './style';
 import Logo from './../../components/logo/index.js';
@@ -7,10 +7,10 @@ import CamIcon from '../../components/camIcon/index.js';
 
 export default function Name({ navigation, route }) {
   const [name, setName] = useState('');
-  const {email,password, birthdate} = route.params;
+  const { email, password, birthdate } = route.params;
 
   function accessHome() {
-    navigation.navigate('Home',{name:name, email:email , password: password, birthdate:birthdate})
+    navigation.navigate('Home', { name: name, email: email, password: password, birthdate: birthdate })
   }
 
 
@@ -20,11 +20,16 @@ export default function Name({ navigation, route }) {
       <Text style={[styles.text, styles.purpleText, styles.boldText, styles]}>
         Adicionando novo perfil
       </Text>
-<TouchableOpacity>
-  <CamIcon/>
-</TouchableOpacity>
+
+
+      <Pressable
+        style={({ pressed }) => [
+          { opacity: pressed ? 0.5 : 1.0 }]}>
+            <CamIcon/>
+      </Pressable>
+
+
       <View style={{ width: '80%', }}>
-        
 
         <Text style={[styles.text, styles.purpleText, styles.boldText]}>
           Nome
@@ -39,13 +44,15 @@ export default function Name({ navigation, route }) {
 
       </View>
 
-      <TouchableOpacity
-        onPress={accessHome}
-        style={styles.button}>
-        <Text style={[styles.text, styles.whiteText]}>
+      <Pressable
+      
+        style={({ pressed }) => [
+          { opacity: pressed ? 0.5 : 1.0 },styles.button]}
+        onPress={accessHome}>
+        <Text style={[styles.text, styles.whiteText, styles.boldText]}>
           Adicionar perfil
         </Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }

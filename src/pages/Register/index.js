@@ -1,4 +1,3 @@
-
 import MaskInput, { Masks } from 'react-native-mask-input';
 import { View, Text, TextInput, Pressable, } from 'react-native';
 import { useState } from 'react';
@@ -6,9 +5,8 @@ import styles from './style';
 import Logo from './../../components/logo/';
 import Eye from './../../components/eye';
 
-
 export default function Register({ navigation }) {
-  
+
   function fnEye() {
     if (eyeClick === true) {
       setEyeClick(false);
@@ -25,7 +23,7 @@ export default function Register({ navigation }) {
       password: password
     })
   }
-  
+
   const [textEmailEmpty, setTextEmail] = useState(styles.displayNone);
   const [textPasswordEmpty, setTextPassword] = useState(styles.displayNone);
   const [textBirthdateEmpty, setTextBirthdate] = useState(styles.displayNone);
@@ -36,25 +34,25 @@ export default function Register({ navigation }) {
   const [styleEmail, setStyleEmail] = useState(styles.input);
   const [stylePassword, setStylePassword] = useState(styles.input);
   const [styleBirthdate, setStyleBirthdate] = useState(styles.input);
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [birthdate, setBirthdate] = useState('');
-  
+
   const blurEmptyField = (id) => {
-    if (id === 'passwordInput'){
+    if (id === 'passwordInput') {
       if (password === '') {
         setStylePassword(styles.redInput);
         setTextPassword(styles.redText);
       }
     }
-    if (id === 'emailInput'){
+    if (id === 'emailInput') {
       if (email === '') {
         setStyleEmail(styles.redInput);
         setTextEmail(styles.redText);
       }
     }
-    if (id === 'birthdateInput'){
+    if (id === 'birthdateInput') {
       if (email === '') {
         setStyleBirthdate(styles.redInput);
         setTextBirthdate(styles.redText);
@@ -81,8 +79,24 @@ export default function Register({ navigation }) {
   };
 
   function fnValidar() {
-    accessName();
-  };
+
+    email !== '' ? '' : blurEmptyField('emailInput')
+    password !== '' ? '' : blurEmptyField('passwordInput')
+    birthdate !== '' ? '' : blurEmptyField('birthdateInput')
+
+    const validEmail = (email) => {
+      return /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(email)
+    }
+
+    const validPassword = (password) => {
+      return /^.{1,}$/.test(password)
+    }
+
+    if (validEmail(email) === true &&
+      validPassword(password) === true) {
+      accessName();
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -92,7 +106,7 @@ export default function Register({ navigation }) {
           Email
         </Text>
         <TextInput
-          keyboardType='email-address'
+          inputMode='email'
           style={styleEmail}
           value={email}
           onChangeText={changeTextEmail}
@@ -115,7 +129,7 @@ export default function Register({ navigation }) {
             secureTextEntry={secure}
             onBlur={() => blurEmptyField('passwordInput')}
           />
-          <Eye onClick={fnEye}/>
+          <Eye onClick={fnEye} />
         </View>
         <Text style={textPasswordEmpty}>Este campo é obrigatório</Text>
       </View>
@@ -136,12 +150,14 @@ export default function Register({ navigation }) {
           placeholder='__/__/____'
           placeholderTextColor='#581183'
         />
-      <Text style={textBirthdateEmpty}>Este campo é obrigatório</Text>
+        <Text style={textBirthdateEmpty}>Este campo é obrigatório</Text>
 
       </View>
       <Pressable
         onPress={fnValidar}
-        style={styles.button}>
+        style={({ pressed }) => [
+          { opacity: pressed ? 0.5 : 1.0 },
+          styles.button]}>
         <Text style={[styles.text, styles.whiteText]}>
           Cadastre-se
         </Text>
@@ -159,14 +175,15 @@ export default function Register({ navigation }) {
       </View>
 
       <Text style={[styles.text, styles.centerText, styles.greyText, styles.marginH]}>Ao continuar, você concorda com os Termos de Serviço e a Política de Privacidade.</Text>
-      <View style={{justifyContent: 'center',flexDirection: 'row'}}>
-      <Text style={[styles.text, styles.centerText, styles.greyText]}>Já tem uma conta? </Text>
+      <View style={{ justifyContent: 'center', flexDirection: 'row' }}>
+        <Text style={[styles.text, styles.centerText, styles.greyText]}>Já tem uma conta? </Text>
         <Pressable
-          onPress={() => navigation.goBack()}>
-
+          onPress={() => navigation.goBack()}
+          style={({ pressed }) => [
+            { opacity: pressed ? 0.5 : 1.0 }]}>
           <Text style={[styles.text, styles.purpleText, styles.boldText,]}>Entrar.</Text>
         </Pressable>
-            </View>
+      </View>
 
     </View>
   );

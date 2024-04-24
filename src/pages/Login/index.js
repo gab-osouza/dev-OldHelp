@@ -2,7 +2,7 @@ import { View, Text, TextInput, Pressable, } from 'react-native';
 import { useState } from 'react';
 import styles from './style';
 import Logo from './../../components/logo/';
-import Eye from './../../components/eye/'
+import Eye from './../../components/eye/';
 
 export default function Login({ navigation }) {
 
@@ -40,14 +40,14 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function blurEmptyField(id){
-    if (id === 'passwordInput'){
+  function blurEmptyField(id) {
+    if (id === 'passwordInput') {
       if (password === '') {
         setStylePassword(styles.redInput);
         setTextPassword(styles.redText);
       }
     }
-    if (id === 'emailInput'){
+    if (id === 'emailInput') {
       if (email === '') {
         setStyleEmail(styles.redInput);
         setTextEmail(styles.redText);
@@ -68,7 +68,23 @@ export default function Login({ navigation }) {
   };
 
   function fnValidar() {
-    accessName();
+
+    email !== '' ? '' : blurEmptyField('emailInput')
+    password !== '' ? '' : blurEmptyField('passwordInput')
+
+    const validEmail = (email) => {
+      return /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(email)
+    }
+
+    const validPassword = (password) => {
+      return /^.{1,}$/.test(password) // valida a quantidade de caractere
+    }
+
+    if (validEmail(email) === true &&
+      validPassword(password) === true) {
+      accessName();
+    }
+
   };
 
   return (
@@ -84,7 +100,7 @@ export default function Login({ navigation }) {
           Email
         </Text>
         <TextInput
-          keyboardType='email-address'
+          inputMode='email'
           style={styleEmail}
           value={email}
           onChangeText={changeTextEmail}
@@ -107,19 +123,22 @@ export default function Login({ navigation }) {
             secureTextEntry={secure}
             onBlur={() => blurEmptyField('passwordInput')}
           />
-        <Eye onClick={fnEye}/>
+          <Eye onClick={fnEye} />
         </View>
         <Text style={textPasswordEmpty}>Este campo é obrigatório</Text>
-      </View>
 
+      </View>
 
       <Pressable
         onPress={fnValidar}
-        style={styles.button}>
+        style={({ pressed }) => [
+          { opacity: pressed ? 0.5 : 1.0 }, styles.button]}>
         <Text style={[styles.text, styles.whiteText]}>
           Entrar
         </Text>
       </Pressable>
+
+
 
       {/*--- ou ---*/}
 
@@ -135,6 +154,8 @@ export default function Login({ navigation }) {
       <Text style={[styles.text, styles.centerText, styles.greyText, styles.marginH]}>Ao continuar, você concorda com os Termos de Serviço e a Política de Privacidade.</Text>
       <Text style={[styles.text, styles.centerText, styles.greyText]}>Ainda não esta no OldHelp?{'\n'}
         <Pressable
+          style={({ pressed }) => [
+            { opacity: pressed ? 0.5 : 1.0 }]}
           onPress={accessRegister}>
           <Text style={[styles.text, styles.purpleText, styles.boldText]}>
             Crie sua conta.
