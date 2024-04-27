@@ -73,7 +73,8 @@ export default function Login({ navigation }) {
     password !== '' ? '' : blurEmptyField('passwordInput')
 
     const validEmail = (email) => {
-      return /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(email)
+      //return /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(email)
+      return true
     }
 
     const validPassword = (password) => {

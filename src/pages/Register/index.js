@@ -85,7 +85,8 @@ export default function Register({ navigation }) {
     birthdate !== '' ? '' : blurEmptyField('birthdateInput')
 
     const validEmail = (email) => {
-      return /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(email)
+      //return /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(email)
+      return true
     }
 
     const validPassword = (password) => {
@@ -146,7 +147,7 @@ export default function Register({ navigation }) {
           onBlur={() => blurEmptyField('birthdateInput')}
           mask={Masks.DATE_DDMMYYYY}
           style={styleBirthdate}
-          keyboardType='numeric'
+          inputMode='numeric'
           placeholder='__/__/____'
           placeholderTextColor='#581183'
         />
